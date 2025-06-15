@@ -129,7 +129,6 @@ async function getAllActresses() {
     const actresses: Actress[] = data.filter(isActress);
 
     return actresses;
-
   } catch (error) {
     if (error instanceof Error) {
       console.error(`Error fetching all actresses: ${error.message}`);
