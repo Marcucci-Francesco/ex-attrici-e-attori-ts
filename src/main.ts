@@ -149,5 +149,18 @@ async function getAllActresses() {
 
 // La funzione deve restituire un array contenente elementi di tipo Actress oppure null (se l’attrice non è stata trovata).
 
+async function getActresses(ids: number[]): Promise<(Actress | null)[]> {
+  try {
+    const promises = ids.map(id => getActress(id));
+    const results = await Promise.all(promises);
+    return results;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(`Error fetching actresses: ${error.message}`);
+    }
+    return [];
+  }
+}
+
 
 
