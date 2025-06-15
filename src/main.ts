@@ -59,6 +59,50 @@ type Actress = Person & {
 
 // Utilizza un type guard chiamato isActress per assicurarti che la struttura del dato ricevuto sia corretta.
 
+function isActress(data: unknown): data is Actress {
+  return (
+    typeof data === "object" &&
+    data !== null &&
+    "id" in data &&
+    typeof data.id === "number" &&
+    "name" in data &&
+    typeof data.name === "string" &&
+    "birth_year" in data &&
+    typeof data.birth_year === "number" &&
+    "death_year" in data && typeof data.death_year === "number" &&
+    "biography" in data &&
+    typeof data.biography === "string" &&
+    "image" in data &&
+    typeof data.image === "string" &&
+    "most_famous_movies" in data &&
+    data.most_famous_movies instanceof Array &&
+    data.most_famous_movies.length === 3 &&
+    data.most_famous_movies.every(movie => typeof movie === "string") &&
+    "awards" in data &&
+    typeof data.awards === "string" &&
+    "nationality" in data &&
+    typeof data.nationality === "string"
+  )
+}
+
+async function getActress(id: number) {
+  try {
+    const response = await fetch(`https://api.example.com/actresses/${id}`);
+
+    const data: unknown = await response.json();
+    if (!isActress(data)) {
+      throw new Error(`Data for actress with id ${id} is not valid`);
+    }
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(`Error fetching actress with id ${id}: ${error.message}`);
+    }
+    return null;
+  }
+}
+
+
 
 
 // 📌 Milestone 4
