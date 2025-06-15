@@ -30,6 +30,25 @@ type Person = {
 // nationality: una stringa tra un insieme definito di valori.
 // Le nazionalità accettate sono: American, British, Australian, Israeli-American, South African, French, Indian, Israeli, Spanish, South Korean, Chinese.
 
+type ActressNationality =
+  | "American"
+  | "British"
+  | "Australian"
+  | "IsraeliAmerican"
+  | "SouthAfrican"
+  | "French"
+  | "Indian"
+  | "Israeli"
+  | "Spanish"
+  | "SouthKorean"
+  | "Chinese"
+
+type Actress = Person & {
+  most_famous_movies: [string, string, string];
+  awards: string;
+  nationality: ActressNationality;
+}
+
 
 
 // 📌 Milestone 3
