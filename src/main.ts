@@ -87,7 +87,7 @@ function isActress(data: unknown): data is Actress {
 
 async function getActress(id: number) {
   try {
-    const response = await fetch(`https://api.example.com/actresses/${id}`);
+    const response = await fetch(`http://localhost:3333/actresses/${id}`);
 
     const data: unknown = await response.json();
     if (!isActress(data)) {
@@ -112,6 +112,31 @@ async function getActress(id: number) {
 // La funzione deve restituire un array di oggetti Actress.
 
 // Può essere anche un array vuoto.
+
+
+async function getAllActresses() {
+  try {
+    const response = await fetch("http://localhost:3333/actresses");
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data: unknown[] = await response.json();
+    if (!(data instanceof Array)) {
+      throw new Error("Data is not an array");
+    }
+
+    const actresses: Actress[] = data.filter(isActress);
+
+    return actresses;
+
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(`Error fetching all actresses: ${error.message}`);
+    }
+    return [];
+  }
+}
 
 
 
